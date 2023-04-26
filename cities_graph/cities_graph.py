@@ -13,6 +13,9 @@ class CitiesGraph:
         self.country_names = country_names if country_names is not None else []
         self.city_nodes = city_nodes if city_nodes is not None else {}
 
+    def __bool__(self):
+        return bool(self.city_nodes)
+
     def __setitem__(self, coords: Union[tuple, int], city_node):
         if type(coords) == tuple:
             x, y = coords
