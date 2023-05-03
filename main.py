@@ -1,10 +1,13 @@
+"""Main CLI file to run the algorithm."""
+import time
+from collections import defaultdict
+
 from cities_graph import CitiesGraph
 from utils import get_test_cases, make_case_results_output
-from collections import defaultdict
-import time
 
 
 def get_country_cities(case_graph: CitiesGraph) -> dict[str, set]:
+    """Gets current country cities in a graph."""
     country_cities = defaultdict(lambda: set())
     for city_id, city_node in case_graph:
         country_cities[city_node.country].add(city_id)
@@ -12,13 +15,14 @@ def get_country_cities(case_graph: CitiesGraph) -> dict[str, set]:
 
 
 def update_completed_countries(
-        completed_countries: set,
-        country_cities: dict[str, set],
-        completed_cities: set,
-        case_results: dict,
-        case_number: int,
-        current_day: int
+    completed_countries: set,
+    country_cities: dict[str, set],
+    completed_cities: set,
+    case_results: dict,
+    case_number: int,
+    current_day: int,
 ) -> None:
+    """Used to check if all cities in a country are completed."""
     for completed_country in completed_countries:
         country_cities.pop(completed_country)
     completed_countries.clear()
@@ -29,7 +33,8 @@ def update_completed_countries(
             case_results.setdefault(case_number, {})[country_name] = current_day
 
 
-def process_case(case_number: int, case_text: str, case_results: dict):
+def process_case(case_number: int, case_text: str, case_results: dict) -> None:
+    """Functions simulates a single case until all case cities completed."""
     case_graph = CitiesGraph.from_case_text(case_text)
     if not case_graph:
         return
@@ -46,7 +51,7 @@ def process_case(case_number: int, case_text: str, case_results: dict):
             completed_cities,
             case_results,
             case_number,
-            current_day
+            current_day,
         )
 
         for city_id, city_node in case_graph:
@@ -60,7 +65,7 @@ def process_case(case_number: int, case_text: str, case_results: dict):
         case_graph.simulate_graph_in_a_one_day()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     input_file_path = input("Enter path to your input file (press enter for default one): ")
     start_time = time.time()
 

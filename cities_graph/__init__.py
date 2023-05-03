@@ -1,3 +1,4 @@
+"""Package responsible for city graph."""
 from .cities_graph import CitiesGraph
 from .city_node import CityNode
 
