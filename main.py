@@ -1,5 +1,6 @@
 from cities_graph import CitiesGraph
 from utils import get_test_cases, make_case_results_output
+from collections import defaultdict
 import time
 
 
@@ -43,7 +44,7 @@ if __name__ == '__main__':
 
             current_day += 1
 
-            case_graph = case_graph.get_graph_in_a_one_day()
+            case_graph.simulate_graph_in_a_one_day()
 
     print(make_case_results_output(case_results))
     print(f"Time taken: {time.time() - start_time}s")
