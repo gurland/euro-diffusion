@@ -1,8 +1,12 @@
 from cities_graph import CitiesGraph
 from utils import get_test_cases, make_case_results_output
+import time
+
 
 if __name__ == '__main__':
     input_file_path = input("Enter path to your input file (press enter for default one): ")
+    start_time = time.time()
+
     cases = get_test_cases(input_file_path)
 
     case_results: dict[int, dict[list, int]] = {}
@@ -12,9 +16,9 @@ if __name__ == '__main__':
         if not case_graph:
             break
 
-        country_cities = {}
+        country_cities = defaultdict(lambda: set())
         for city_id, city_node in case_graph:
-            country_cities.setdefault(city_node.country, set()).add(city_id)
+            country_cities[city_node.country].add(city_id)
 
         completed_cities = set()
         completed_countries = set()
@@ -42,3 +46,4 @@ if __name__ == '__main__':
             case_graph = case_graph.get_graph_in_a_one_day()
 
     print(make_case_results_output(case_results))
+    print(f"Time taken: {time.time() - start_time}s")
