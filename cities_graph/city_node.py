@@ -1,5 +1,6 @@
 """Contains city node definition used to represent each country's city."""
 
+INITIAL_CITY_BALANCE = 1_000_000
 CountryName = str
 CityBalance = dict[CountryName, int]
 
@@ -13,7 +14,7 @@ class CityNode:
     def __init__(self, country: str, country_names: list[str]) -> None:
         """Initialize city node object."""
         self.balance = {country_name: 0 for country_name in country_names}
-        self.balance[country] = 1_000_000
+        self.balance[country] = INITIAL_CITY_BALANCE
 
         self.country = country
 
