@@ -3,6 +3,11 @@
 ## Usage
 `python main.py`
 
+## Contribution
+You need pre-commit to check if your changes comply to conventions
+
+`pre-commit run --all-files`
+
 ## Euro diffusion
 
 On January 1, 2002, twelve European countries abandoned their national currency for a new
@@ -58,12 +63,3 @@ name. Use the output format shown in the example.
 | Sample Input  | Output for the Sample Input |
 | ------------- | ------------- |
 |3 <br> France 1 4 4 6 <br> Spain 3 1 6 3 <br> Portugal 1 1 2 2 <br> 1 <br> Luxembourg 1 1 1 1 <br> 2 <br> Netherlands 1 3 2 4 <br>Belgium 1 1 2 2 <br> 0|Case Number 1<br> Spain 382<br><br>Portugal 416 France 1325 Case Number 2<br>Luxembourg 0<br>Case Number 3<br>Belgium 2<br>Netherlands 2|
-
-
-
-
-
-
-
-
-

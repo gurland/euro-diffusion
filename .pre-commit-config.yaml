@@ -1,0 +1,38 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: no-commit-to-branch
+      - id: trailing-whitespace
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+        args: ["-l", "100", "--target-version=py39"]
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: "3.9.2"
+    hooks:
+      - id: flake8  # C90,E,F,W
+        additional_dependencies:
+          - darglint==1.7.0  # DAR
+          - flake8-annotations==2.6.1  # ANN
+          - flake8-bugbear==21.3.2  # B,B9
+          - flake8-cognitive-complexity==0.1.0  # CCR
+          - flake8-comprehensions==3.3.1  # C4
+          - flake8-docstrings==1.5.0  # D
+          - flake8-eradicate==1.0.0  # E800
+          - flake8-polyfill==1.0.2
+          - flake8-pytest-style==1.4.0  # PT
+          - pep8-naming==0.11.1  # N8
+  - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
+    rev: v9.5.0
+    hooks:
+      - id: commitlint
+        stages: [commit-msg]
+        additional_dependencies: ['@commitlint/config-conventional']

@@ -1,7 +1,9 @@
+"""Helpers and utility functions."""
 import re
 
 
 def get_test_cases(file_path: str) -> list[str]:
+    """Reads a file with test cases and returns list with only valid cases."""
     file_path = file_path if file_path else "input.txt"
 
     with open(file_path, "r") as input_file:
@@ -15,8 +17,8 @@ def get_test_cases(file_path: str) -> list[str]:
 
         coord_pattern = r"\b([1-9]|10)\b"
         country_tuples = re.findall(
-            fr"(?m)(\w+) {coord_pattern} {coord_pattern} {coord_pattern} {coord_pattern}",
-            countries_string
+            rf"(?m)(\w+) {coord_pattern} {coord_pattern} {coord_pattern} {coord_pattern}",
+            countries_string,
         )
 
         if len(countries_string.strip().splitlines()) != len(country_tuples):
@@ -27,14 +29,16 @@ def get_test_cases(file_path: str) -> list[str]:
     return test_cases
 
 
-def make_case_results_output(case_results) -> str:
+def make_case_results_output(case_results: dict) -> str:
+    """Returns specifically formatted output string."""
     result = ""
     for case_number, case_result in case_results.items():
         case_number += 1
         result += f"Case Number {case_number}\n"
+        sorted_by_name = sorted(case_result.items())  # Sort by name
         for country_name, days_to_complete in sorted(
-                sorted(case_result.items()),  # Sort by name
-                key=lambda case: case[1]  # Sort by days to complete
+            sorted_by_name,
+            key=lambda case: case[1],  # Sort by days to complete
         ):
             result += f"{country_name} {days_to_complete}\n"
 
