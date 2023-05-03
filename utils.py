@@ -11,6 +11,17 @@ def get_test_cases(file_path: str) -> list[str]:
     test_cases = []
 
     for i in range(0, len(cases_parts), 2):
+        countries_string = cases_parts[i + 1]
+
+        coord_pattern = r"\b([1-9]|10)\b"
+        country_tuples = re.findall(
+            fr"(?m)(\w+) {coord_pattern} {coord_pattern} {coord_pattern} {coord_pattern}",
+            countries_string
+        )
+
+        if len(countries_string.strip().splitlines()) != len(country_tuples):
+            continue
+
         test_cases.append(cases_parts[i] + cases_parts[i + 1])
 
     return test_cases
