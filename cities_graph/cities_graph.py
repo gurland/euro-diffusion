@@ -1,5 +1,5 @@
-import copy
 from typing import Union
+from collections import defaultdict
 
 from .city_node import CityNode
 from .cities_graph_iter import CitiesGraphIterator
@@ -83,23 +83,25 @@ class CitiesGraph:
 
         return adjacent_ids
 
-    def get_graph_in_a_one_day(self):
-        next_day_graph = copy.deepcopy(self)
+    def simulate_graph_in_a_one_day(self):
+        city_replenish_portions = defaultdict(lambda: [])  # city_id: list[portions]
+        withdraw_portions = {}  # city_id: portion
 
         for city_id, city_node in self:
             daily_representative_portion = city_node.get_representative_portions()
             adjacent_city_ids = self.get_adjacent_city_ids(city_id)
 
             for adjacent_city_id in adjacent_city_ids:
-                next_day_graph.city_nodes[adjacent_city_id].replenish_city_balance(
-                    daily_representative_portion
-                )
+                city_replenish_portions[adjacent_city_id].append(daily_representative_portion)
 
-            # Withdraw representative portion of each motif from this city
-            # because these were transferred to neighbours
-            next_day_graph[city_id].withdraw_city_balance({
+            withdraw_portions[city_id] = {
                 country_name: coin_value * len(adjacent_city_ids)
                 for country_name, coin_value in daily_representative_portion.items()
-            })
+            }
 
-        return next_day_graph
+        for city_id, replenish_portions in city_replenish_portions.items():
+            for replenish_portion in replenish_portions:
+                self.city_nodes[city_id].replenish_city_balance(replenish_portion)
+
+        for city_id, withdraw_portion in withdraw_portions.items():
+            self.city_nodes[city_id].withdraw_city_balance(withdraw_portion)
