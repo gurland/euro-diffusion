@@ -13,10 +13,10 @@ class CitiesGraph:
         self.country_names = country_names if country_names is not None else []
         self.city_nodes = city_nodes if city_nodes is not None else {}
 
-    def __bool__(self):
+    def __bool__(self) -> bool:
         return bool(self.city_nodes)
 
-    def __setitem__(self, coords: Union[tuple, int], city_node):
+    def __setitem__(self, coords: Union[tuple, int], city_node) -> None:
         if type(coords) == tuple:
             x, y = coords
             city_id = 10 * x + y
@@ -28,7 +28,7 @@ class CitiesGraph:
 
         self.city_nodes[city_id] = city_node
 
-    def __getitem__(self, coords: Union[tuple, int]):
+    def __getitem__(self, coords: Union[tuple, int]) -> CityNode:
         if type(coords) == tuple:
             x, y = coords
             city_id = 10 * x + y
@@ -37,7 +37,7 @@ class CitiesGraph:
 
         return self.city_nodes.get(city_id)
 
-    def __iter__(self):
+    def __iter__(self) -> CitiesGraphIterator:
         return CitiesGraphIterator(self)
 
     @classmethod
@@ -65,12 +65,12 @@ class CitiesGraph:
             name: str,
             xl: Union[str, int], yl: Union[str, int],  # Left bottom corner
             xh: Union[str, int], yh: Union[str, int]   # Right top corner
-    ):
+    ) -> None:
         for x in range(int(xl), int(xh)+1):
             for y in range(int(yl), int(yh)+1):
                 self[x, y] = CityNode(name, self.country_names)
 
-    def get_adjacent_city_ids(self, city_id):
+    def get_adjacent_city_ids(self, city_id: int) -> list[int]:
         possible_adjacent_ids = (city_id - 10,  # North
                                  city_id + 10,  # South
                                  city_id - 1,   # West
@@ -83,7 +83,7 @@ class CitiesGraph:
 
         return adjacent_ids
 
-    def simulate_graph_in_a_one_day(self):
+    def simulate_graph_in_a_one_day(self) -> None:
         city_replenish_portions = defaultdict(lambda: [])  # city_id: list[portions]
         withdraw_portions = {}  # city_id: portion
 

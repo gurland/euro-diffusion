@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 
 
 if TYPE_CHECKING:
-    from .cities_graph import CitiesGraph
+    from .cities_graph import CitiesGraph, CityNode
 
 
 class CitiesGraphIterator:
@@ -13,10 +13,10 @@ class CitiesGraphIterator:
         self.visited = set()
         self.queue = [root_id]
 
-    def __iter__(self):
+    def __iter__(self) -> 'CitiesGraphIterator':
         return self
 
-    def __next__(self):
+    def __next__(self) -> tuple[int, 'CityNode']:
         if not self.queue:
             raise StopIteration
 
