@@ -4,7 +4,7 @@ from collections import defaultdict
 import time
 
 
-def get_country_cities(case_graph):
+def get_country_cities(case_graph: CitiesGraph) -> dict[str, set]:
     country_cities = defaultdict(lambda: set())
     for city_id, city_node in case_graph:
         country_cities[city_node.country].add(city_id)
@@ -12,13 +12,13 @@ def get_country_cities(case_graph):
 
 
 def update_completed_countries(
-        completed_countries,
-        country_cities,
-        completed_cities,
-        case_results,
-        case_number,
-        current_day
-):
+        completed_countries: set,
+        country_cities: dict[str, set],
+        completed_cities: set,
+        case_results: dict,
+        case_number: int,
+        current_day: int
+) -> None:
     for completed_country in completed_countries:
         country_cities.pop(completed_country)
     completed_countries.clear()
@@ -29,7 +29,7 @@ def update_completed_countries(
             case_results.setdefault(case_number, {})[country_name] = current_day
 
 
-def process_case(case_number, case_text, case_results):
+def process_case(case_number: int, case_text: str, case_results: dict):
     case_graph = CitiesGraph.from_case_text(case_text)
     if not case_graph:
         return

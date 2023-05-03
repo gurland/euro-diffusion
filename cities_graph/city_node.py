@@ -12,7 +12,7 @@ class CityNode:
 
         self.country = country
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.balance)
 
     def is_complete(self) -> bool:
