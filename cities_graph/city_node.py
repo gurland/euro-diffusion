@@ -1,6 +1,10 @@
 """Contains city node definition used to represent each country's city."""
 
-INITIAL_CITY_BALANCE = 1_000_000
+INITIAL_CITY_BALANCE = (
+    1_000_000  # At day 1 all cities have this amount of coins of their country's motif
+)
+DAILY_REPRESENTATIVE_DIVISOR = 1000  # The representative portion divisor for the whole city balance
+
 CountryName = str
 CityBalance = dict[CountryName, int]
 
@@ -30,7 +34,7 @@ class CityNode:
         """Get representative portion (.001 of each motif) of coins."""
         representative_portions = {}
         for country in self.balance.keys():
-            coin_portion = int(self.balance[country] / 1000)
+            coin_portion = int(self.balance[country] / DAILY_REPRESENTATIVE_DIVISOR)
             representative_portions[country] = coin_portion
 
         return representative_portions
