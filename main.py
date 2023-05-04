@@ -43,7 +43,7 @@ def process_case(case_number: int, case_text: str, case_results: dict) -> None:
     completed_cities = set()
     completed_countries = set()
 
-    current_day = -1
+    current_day = 0
     while country_cities:
         update_completed_countries(
             completed_countries,
@@ -54,15 +54,15 @@ def process_case(case_number: int, case_text: str, case_results: dict) -> None:
             current_day,
         )
 
+        case_graph.simulate_graph_in_a_one_day()
+        current_day += 1
+
         for city_id, city_node in case_graph:
             if city_id in completed_cities:
                 continue
 
             if city_node.is_complete():
                 completed_cities.add(city_id)
-
-        current_day += 1
-        case_graph.simulate_graph_in_a_one_day()
 
 
 if __name__ == "__main__":
