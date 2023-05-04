@@ -22,11 +22,7 @@ class CitiesGraph:
 
     def __setitem__(self, coords: Union[tuple, int], city_node: CityNode) -> None:
         """Set city node for both [x, y] and [city_id] syntax."""
-        if type(coords) == tuple:
-            x, y = coords
-            city_id = 10 * x + y
-        else:
-            city_id = coords
+        city_id = self.get_city_id(coords)
 
         if self.city_nodes.get(city_id) is not None:
             raise ValueError("Countries overlap. Error")
@@ -35,17 +31,22 @@ class CitiesGraph:
 
     def __getitem__(self, coords: Union[tuple, int]) -> CityNode:
         """Get city node for both [x, y] and [city_id] syntax."""
-        if type(coords) == tuple:
-            x, y = coords
-            city_id = 10 * x + y
-        else:
-            city_id = coords
+        city_id = self.get_city_id(coords)
 
         return self.city_nodes.get(city_id)
 
     def __iter__(self) -> CitiesGraphIterator:
         """Returns an iterator from graph itself."""
         return CitiesGraphIterator(self)
+
+    @staticmethod
+    def get_city_id(coords: Union[tuple, int]) -> int:
+        """This method is used to convert (x, y) pair to city_id as well ass city_id itself."""
+        if isinstance(coords, tuple):
+            x, y = coords
+            return 10 * x + y
+
+        return coords
 
     @classmethod
     def from_case_text(cls, case_text: str) -> "CitiesGraph":
